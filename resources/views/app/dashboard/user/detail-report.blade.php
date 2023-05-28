@@ -117,7 +117,7 @@
                         </div> --}}
                     </div>
                 </div>
-                @if ($report->report_status != "dibatalkan")
+                @if($report->report_status == "pending" || $report->report_status == "diproses")
                     <div class="flex my-1">
                         <input type="text" class="text-xs py-2 border-2 p-1 px-2 w-10/12 placeholder:text-sm" id="inputChat"
                             placeholder="ketikan sesuatu...">
@@ -300,13 +300,14 @@
             }
         }
         getMessages();
-        const getMessageInterval = (time) => {
-            setInterval(() => {
-                getMessages();
-            }, time);
-        }
-        getMessageInterval(3000);
-
+        @if($report->report_status == "pending" || $report->report_status == "diproses")
+            const getMessageInterval = (time) => {
+                setInterval(() => {
+                    getMessages();
+                }, time);
+            }
+            getMessageInterval(3000);   
+        @endif
         const cancelReport = () => {
             let confirmation = confirm("Apakah Anda ingin membatalkan laporan ini? ");
             if(confirmation) {

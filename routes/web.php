@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FiremanController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +62,12 @@ Route::middleware("auth")->group(function() {
                     Route::get("profile","profileView")->name("fireman.profile");
                     Route::post("profile","profilePost")->name("fireman.profile.post");
                 });
+            });
+        });
+
+        Route::prefix("notifications")->group(function() {
+            Route::controller(NotificationController::class)->group(function() {
+                Route::get("/","notifView")->name("notif.view");
             });
         });
 

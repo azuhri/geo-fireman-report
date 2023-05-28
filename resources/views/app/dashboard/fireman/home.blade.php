@@ -88,7 +88,7 @@
                               <svg viewBox="0 0 24 24" width="12" height="12" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg>
                             </div>
                             <p class="text-sm font-bold mt-2 text-center">Rating Performa</p>
-                            <span class="text-3xl font-bold font-poppins right-4 top-8 text-white">{{round($rating)}}</span>
+                            <span class="text-3xl font-bold font-poppins right-4 top-8 text-white">{{floor($rating * 10) / 10}}</span>
                         </div>
                     </div>
                 </div>

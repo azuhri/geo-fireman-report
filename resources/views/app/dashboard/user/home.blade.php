@@ -139,7 +139,9 @@
                     console.log(e);
                 });
         });;
-        @if (session('errors'))
+        @if(session('notif_error'))
+            $.Toast("Pesan Peringatan", "{{ session('notif_error') }}", "error");
+        @elseif (session('errors'))
             $.Toast("Pesan Peringatan", "{{ $errors->first() }}", "error");
         @elseif (session('success'))
             $.Toast("Pesan", "{{ session('success') }}", "success");

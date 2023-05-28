@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestUpdateProfileFireman;
+use App\Models\Notification;
 use App\Models\Report;
 use App\Models\ReportMessage;
 use Illuminate\Http\Request;
@@ -85,7 +86,8 @@ class FiremanController extends Controller
         $newMessage->user_id = Auth::user()->id;
         $newMessage->message = $message;
         $newMessage->save();
-
+        $findReport = Report::with("user")->find($reportId);
+        Notification::newNotif($findReport->user_id, "Hallo, kamu ada pesan baru yang belum dibaca nih, yuk dicheck :')", route('user.detail.report',$findReport->id));
         $messages = ReportMessage::where("report_id", $reportId)
             ->orderBy("id", "ASC")
             ->get();
@@ -109,7 +111,7 @@ class FiremanController extends Controller
         $response = [
             "status" => true,
         ];
-        $findReport = Report::find($reportId);
+        $findReport = Report::with(["user","fireman"])->find($reportId);
         if (!$findReport)
             \abort(500);
 
@@ -123,6 +125,7 @@ class FiremanController extends Controller
                 \abort(500);
                 break;
         }
+        Notification::newNotif($findReport->user_id, "Hallo, {$findReport->user->name}. laporan kamu ke {$findReport->fireman->name} telah {$status}", route('user.detail.report',$findReport->id));
         $findReport->report_status = $status;
         $findReport->update();
         $response["data"] = $findReport;
@@ -147,10 +150,12 @@ class FiremanController extends Controller
         $sum = DB::table("reports")
             ->select(DB::raw($querySum))
             ->where("fireman_id", $user->id)
+            ->where("rating","!=", null)
             ->first();
         $countData = DB::table("reports")
             ->select(DB::raw("count(*)"))
             ->where("fireman_id", $user->id)
+            ->where("rating","!=", null)
             ->first();
         $rating = $sum->total / $countData->count;
         $data[] = "reportActive";

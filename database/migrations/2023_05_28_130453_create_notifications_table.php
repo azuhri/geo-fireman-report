@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('fireman_id')->index();
-            $table->foreign('fireman_id')->references('id')->on('users');
-            $table->double("latitude")->nullable();
-            $table->double("longitude")->nullable();
-            $table->tinyInteger("type_report")->index();
-            $table->string("report_status", 20)->index();
+            $table->text("pesan");
+            $table->string("url")->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('notifications');
     }
 };

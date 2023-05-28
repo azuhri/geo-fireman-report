@@ -8,7 +8,7 @@
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
         <p class="text-xs mt-1">Laporan</p>
         </a>
-        <a href="" class="font-poppins hover:text-yellow-500 flex flex-col justify-center items-center">
+        <a href="{{route('notif.view')}}" class="{{url()->current() == route('notif.view') ? "text-yellow-500 font-bold" : ""}} font-poppins hover:text-yellow-500 flex flex-col justify-center items-center">
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
         <p class="text-xs mt-1">Notifikasi</p>
         </a>

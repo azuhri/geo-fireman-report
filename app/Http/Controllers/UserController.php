@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\NotifEvent;
 use App\Http\Requests\RequestUpdateProfileUser;
+use App\Models\Notification;
 use App\Models\Report;
 use App\Models\ReportMessage;
 use App\Models\User;
@@ -42,6 +43,9 @@ class UserController extends Controller
     public function createReportView()
     {
         $firemans = User::getFiremansFree();
+        if(count($firemans) == 0) {
+            return redirect()->back()->with("notif_error","Maaf, kamu tidak bisa membuat laporan sampai laporan ditindaklanjuti oleh damkar");
+        }
         $dataArr[] = "firemans";
         return view("app.dashboard.user.create-report",\compact($dataArr));
     }
@@ -66,6 +70,8 @@ class UserController extends Controller
         $newReport->report_status = "pending";
         $newReport->description = $desc;
         $newReport->save();
+        $messageNotif = "Hallo, {$newReport->fireman->name} ada laporan masuk nih yuk segera dicheck :')";
+        Notification::newNotif($newReport->fireman_id, $messageNotif, route('fireman.detail.report',$newReport->id));
 
         return \redirect()->route("user.report")->with("success", "Berhasil membuat laporan");
     }
@@ -128,8 +134,10 @@ class UserController extends Controller
         $newMessage->report_id = $reportId;
         $newMessage->user_id = Auth::user()->id;
         $newMessage->message = $message;
-        $newMessage->save();
-
+        // $newMessage->save();
+        
+        $findReport = Report::with("fireman")->find($reportId);
+        Notification::newNotif($findReport->fireman_id, "Hallo, kamu ada pesan baru yang belum dibaca nih, yuk dicheck :')", route('fireman.detail.report',$findReport->id));
         $messages = ReportMessage::where("report_id",$reportId)
                                           ->orderBy("id","ASC")
                                           ->get();
@@ -153,7 +161,7 @@ class UserController extends Controller
         $response = [
             "status" => true, 
         ];
-        $findReport = Report::find($reportId);
+        $findReport = Report::with("user")->find($reportId);
         if(!$findReport) 
             \abort(500);
 
@@ -169,6 +177,7 @@ class UserController extends Controller
         }
         $findReport->report_status = $status;
         $findReport->update();
+        Notification::newNotif($findReport->fireman_id, "Hallo, laporan dari {$findReport->user->name} telah {$status}", route('fireman.detail.report',$findReport->id));
         $response["data"]= $findReport;
         return \response()->json($response);
     }
