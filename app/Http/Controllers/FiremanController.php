@@ -141,11 +141,11 @@ class FiremanController extends Controller
             ->first();
         $queryLaporan = "count(*) AS total_laporan,
                         count(CASE WHEN report_status = 'selesai' THEN 1 END) AS jumlah_selesai";
-        $dataLaporan = DB::table("reports")->select(DB::raw($queryLaporan))->first();
+        $dataLaporan = DB::table("reports")->select(DB::raw($queryLaporan))->where("fireman_id", Auth::user()->id)->first();
         $levelCaseQuery = "count(CASE WHEN type_report = '1' THEN 1 END) AS level1,
                         count(CASE WHEN type_report = '2' THEN 1 END) AS level2,
                         count(CASE WHEN type_report = '3' THEN 1 END) AS level3";
-        $caseLevel = DB::table("reports")->select(DB::raw($levelCaseQuery))->first();
+        $caseLevel = DB::table("reports")->select(DB::raw($levelCaseQuery))->where("fireman_id", Auth::user()->id)->first();
         $querySum = "sum(rating) AS total";
         $sum = DB::table("reports")
             ->select(DB::raw($querySum))
@@ -157,7 +157,7 @@ class FiremanController extends Controller
             ->where("fireman_id", $user->id)
             ->where("rating","!=", null)
             ->first();
-        $rating = $sum->total / $countData->count;
+        $rating =  $sum->total == 0 || $countData->count == 0 ? 0 : $sum->total / $countData->count;
         $data[] = "reportActive";
         $data[] = "rating";
         $data[] = "dataLaporan";

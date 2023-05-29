@@ -68,6 +68,7 @@ Route::middleware("auth")->group(function() {
         Route::prefix("notifications")->group(function() {
             Route::controller(NotificationController::class)->group(function() {
                 Route::get("/","notifView")->name("notif.view");
+                Route::get("/get","getNotif")->name("notif.get");
             });
         });
 

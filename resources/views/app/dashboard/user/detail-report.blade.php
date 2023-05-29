@@ -27,7 +27,7 @@
             </div>
             <div class="my-2">
                 <p class="text-sm">Status Laporan:</p>
-                <p class="bg-{{statusColor($report->report_status)}}-500 font-bold text-xs text-center text-white rounded font-bold py-1">
+                <p class="{{statusColor($report->report_status) == 'green' ? 'bg-green-600' : 'bg-'.statusColor($report->report_status)."-500"}} font-bold text-xs text-center text-white rounded font-bold py-1">
                     {{ $report->report_status }}</p>
             </div>
             <div class="my-2">

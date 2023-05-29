@@ -74,7 +74,7 @@ const templateReport = (data) => {
                     <p class="text-xs text-gray-500 font-bold">${formattingDate(data.created_at)}</p>
                     <p class="text-xs  text-slate-800">${data.fireman.name}</p>
                 </div>
-                <div class="p-2 text-xs bg-${reportStatusColor(data.report_status)}-500 text-white rounded px-4">
+                <div class="p-2 text-xs ${reportStatusColor(data.report_status) == "green" ? 'bg-green-600' : 'bg-'+reportStatusColor(data.report_status)+"-500"} text-white rounded px-4">
                    ${data.report_status}
                 </div>
               </div>

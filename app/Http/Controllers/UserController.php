@@ -16,16 +16,17 @@ class UserController extends Controller
 {
     public function homeView()
     {
+        $user = Auth::user();
         $reportActive = Report::with("fireman")
-                            ->where("user_id", Auth::user()->id)
+                            ->where("user_id", $user->id)
                             ->where("report_status", "diproses")
                             ->first();
         $queryLaporan = "count(*) AS total_laporan,
                             count(CASE WHEN report_status = 'ditolak' THEN 1 END) AS jumlah_ditolak,
                             count(CASE WHEN report_status = 'selesai' THEN 1 END) AS jumlah_selesai";
-        $dataLaporan = DB::table("reports")->select(DB::raw($queryLaporan))->first();
+        $dataLaporan = DB::table("reports")->select(DB::raw($queryLaporan))->where("user_id", $user->id)->first();
         $laporanGiveFeedBack = Report::with("fireman")
-                                       ->where("user_id", Auth::user()->id)
+                                       ->where("user_id", $user->id)
                                        ->where("report_status","selesai")
                                        ->where("rating", \null)
                                        ->get();

@@ -15,4 +15,12 @@ class NotificationController extends Controller
         $data[] = "notifications";
         return view("app.dashboard.notification-view", compact($data));
     }
+
+    public function getNotif()
+    {
+        $user = Auth::user();
+        $getNewNotif = Notification::where("user_id", $user->id)->where("was_readed", false)->get();
+        $response["data"] = $getNewNotif;
+        return \response()->json($response);
+    }
 }
