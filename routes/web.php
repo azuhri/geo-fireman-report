@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get("/", function() {
-    return redirect()->route('login');
+    return redirect()->route('kontributor');
 });
 
 Route::get("broadcast", function() {
@@ -31,14 +31,20 @@ Route::get("broadcast", function() {
 });
 
 Route::controller(AuthController::class)->group(function() {
-    Route::get("login", "loginView")->name('login');
+    // Route::get("login", "loginView")->name('login');
     Route::post("login", "loginPost")->name('login.post');
     Route::prefix("register")->group(function() {
         Route::get("select-user", "selectUserRegister")->name('select-user-register');
         Route::get("{user_type}", "registerView")->name("register");
         Route::post("/", "registerPost")->name("register.post");
+        
     });
+    
+    Route::get("login", "newLoginView")->name('login');
+    Route::get("kontributor", "kontributorView")->name("kontributor");
 });
+
+
 
 Route::middleware("auth")->group(function() {
     Route::prefix("app")->group(function() {

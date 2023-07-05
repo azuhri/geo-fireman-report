@@ -22,6 +22,23 @@ class AuthController extends Controller
         return view('app.login');
     }
 
+    public function newLoginView()
+    {
+        $user = Auth::user();
+        if($user) {
+            if($user->isFireman()) {
+                return redirect()->route('fireman.home');
+            } else {
+                return redirect()->route('user.home');
+            }
+        }
+        return view('new_app.login');
+    }
+
+    function kontributorView() {
+        return view("new_app.kontributor");
+    }
+
     public function selectUserRegister()
     {
         return view("app.select-user");
@@ -69,6 +86,7 @@ class AuthController extends Controller
     {
         $email = $request->email;
         $password = $request->password;
+        $reminder = $request->remindsme ? true : \false;
 
         $findUser = User::where("email", $email)->first();
         if(!$findUser) {
@@ -78,7 +96,7 @@ class AuthController extends Controller
                     ->withInput();
         }
         
-        $checkingCredentials = Auth::attempt(["email" => $email, "password" => $password], \true);
+        $checkingCredentials = Auth::attempt(["email" => $email, "password" => $password], $reminder);
         if(!$checkingCredentials) {
             return \redirect()
                     ->back()
