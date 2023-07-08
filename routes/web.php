@@ -32,15 +32,15 @@ Route::get("broadcast", function() {
 
 Route::controller(AuthController::class)->group(function() {
     // Route::get("login", "loginView")->name('login');
-    Route::post("login", "loginPost")->name('login.post');
-    Route::prefix("register")->group(function() {
-        Route::get("select-user", "selectUserRegister")->name('select-user-register');
-        Route::get("{user_type}", "registerView")->name("register");
-        Route::post("/", "registerPost")->name("register.post");
+    // Route::prefix("register")->group(function() {
+    //     Route::get("select-user", "selectUserRegister")->name('select-user-register');
+    //     Route::get("{user_type}", "registerView")->name("register");
+    //     Route::post("/", "registerPost")->name("register.post");
         
-    });
-    
+    // });
+    Route::get("register", "newRegisterView")->name("register.new");
     Route::get("login", "newLoginView")->name('login');
+    Route::post("login", "loginPost")->name('login.post');
     Route::get("kontributor", "kontributorView")->name("kontributor");
 });
 
@@ -52,7 +52,8 @@ Route::middleware("auth")->group(function() {
         Route::middleware("fireman")->group(function() {
             Route::prefix("fireman")->group(function() {
                 Route::controller(FiremanController::class)->group(function() {
-                    Route::get("add-geo-locations","geoLocationView")->name("fireman.geolocation");
+                    Route::get("add-geo-locations","geoLocationView")->name("fireman.geolocation.old");
+                    Route::get("add-geo-locations","geoLocationViewNew")->name("fireman.geolocation");
                     Route::post("add-geo-locations","geoLocationPost")->name("fireman.geolocation.post");
                     
                     Route::prefix("report")->group(function() {

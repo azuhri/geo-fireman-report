@@ -21,6 +21,14 @@ class FiremanController extends Controller
         return view("app.dashboard.fireman.add-locations");
     }
 
+    public function geoLocationViewNew()
+    {
+        if (!Auth::user()->isNullLatLong()) {
+            return \redirect()->route('fireman.home');
+        }
+        return view("new_app.dashboard.fireman.add-locations");
+    }
+
     public function reportStatus($status)
     {
         $user = Auth::user();

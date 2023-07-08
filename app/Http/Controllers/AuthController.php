@@ -39,6 +39,10 @@ class AuthController extends Controller
         return view("new_app.kontributor");
     }
 
+    function newRegisterView() {
+        return view("new_app.register");
+    }
+
     public function selectUserRegister()
     {
         return view("app.select-user");
@@ -57,8 +61,9 @@ class AuthController extends Controller
 
     public function registerPost(RequestRegister $request)
     {
+        // dd($request->all());
         if($request->password != $request->confirm_password) {
-            return redirect()->back()->with("errors", "konfirmasi password tidak cocok");
+            return redirect()->back()->withErrors(["error" => "konfirmasi password tidak cocok"])->withInput();
         }
         $typeUser = $request->type_user;
         $newUser = new User();
@@ -70,7 +75,7 @@ class AuthController extends Controller
         if($typeUser) {
             $newUser->gender = $request->jenis_kelamin;
         }
-        $newUser->address = $request->address;
+        $newUser->address = $request->alamat;
         $newUser->password = bcrypt($request->password);
         $newUser->save();
         $request->session()->regenerate();

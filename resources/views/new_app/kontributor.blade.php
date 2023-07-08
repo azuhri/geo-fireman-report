@@ -26,13 +26,13 @@
     </style>
 @endsection
 @section('content')
-    <div class="h-screen">
-        <div class="py-8 mt-8 flex flex-col items-center">
+    <div class="h-screen overflow-y-hidden">
+        <div class="py-8 mt-4 flex flex-col items-center">
             <div class="flex justify-center items-center">
                 <img src="{{ asset('icons/Logogram.png') }}" alt="">
                 <p class="font-bold text-slate-700 text-3xl">&nbsp;O'Fireport</p>
             </div>
-            <div class="mt-36">
+            <div class="mt-24">
                 <img id="ilustrasi_damkar" class="w-[350px]" src="{{ asset('icons/poster.png') }}" alt="">
             </div>
         </div>
