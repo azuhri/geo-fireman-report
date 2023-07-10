@@ -13,12 +13,14 @@
         <div class="font-poppins">
             @yield('dashboard_content')
         </div>
-        @if (Auth::user()->isFireman())
-            @if (!Auth::user()->isNullLatLong())
-                @include('app.dashboard.components.bottom-navbar-fireman')
+        @if (strpos(url()->current(), 'update-point-location') === false)
+            @if (Auth::user()->isFireman())
+                @if (!Auth::user()->isNullLatLong())
+                    @include('new_app.dashboard.components.bottom-navbar-fireman')
+                @endif
+            @else
+                @include('new_app.dashboard.components.bottom-navbar-user')
             @endif
-        @else
-            @include('app.dashboard.components.bottom-navbar-user')
         @endif
     </div>
     <div id="containerAudio" class="hidden">
@@ -29,7 +31,11 @@
 @endsection
 
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+        integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        moment.locale();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -37,13 +43,14 @@
         });
 
         $(document).ready(function() {
-            let jumlahNotif = parseInt('{{count(getNotifNotBelled())}}');
-            if(jumlahNotif > 0) {
+            let jumlahNotif = parseInt('{{ count(getNotifNotBelled()) }}');
+            if (jumlahNotif > 0) {
                 let templateAudio = ` <audio controls autoplay class="">
                                     <source src="{{ asset('sounds/notif.mp3') }}" type="audio/mpeg">
                                 </audio>`;
                 $("#containerAudio").html(templateAudio);
-                $.Toast("Notifikasi", `Ada pesan notifikasi masuk, yuk check inbox notifikasi :')". Silahkan dicheck`, "success");
+                $.Toast("Notifikasi",
+                    `Ada pesan notifikasi masuk, yuk check inbox notifikasi :')". Silahkan dicheck`, "success");
             }
         });
         // const getNotifications = async () => {

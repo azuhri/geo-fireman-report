@@ -7,7 +7,7 @@
         integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
 @endsection
 @section('dashboard_content')
-    <div class="h-screen">
+    <div class="h-screen relative">
         {{-- <p class="mt-4 font-bold relative">Titik Lokasi Unit Kebakaran</p>
         <div class="w-full flex justify-end">
             <small id="latlong" class="font-bold text-[10px]" style="display: none"></small>
@@ -15,7 +15,7 @@
         <div id="map"
             class="h-full border-2 border-slate-500">
         </div>
-        <form class="fixed z-[1000] w-full flex justify-center bottom-10" action="{{ route('fireman.geolocation.post') }}" method="post">
+        <form class="fixed z-[1000] w-[500px] flex justify-center bottom-10" action="{{ route('fireman.geolocation.post') }}" method="post">
             @csrf
             <input type="hidden" name="latitude" id="latitude">
             <input type="hidden" name="longitude" id="longitude">
@@ -30,7 +30,7 @@
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <script>
-        $.Toast("Pesan", "Anda belum menentukan titik lokasi kebakaran. Silahkan tambahkan titik lokasi unit kebakaran",
+        $.Toast("Pesan", "Anda belum menentukan titik lokasi pos pemadam kebakaran. Silahkan ketuk/sentuh titik lokasi unit kebakaran",
             "warning");
 
         var map = L.map('map').setView([-7.275612, 112.6301103], 13);
@@ -40,13 +40,13 @@
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
         }).addTo(map);
         let icon = L.icon({
-            iconUrl: '{{ url('/') }}/icons/pin-blue.png',
+            iconUrl: '{{ url('/') }}/icons/pin-red.png',
 
             iconSize: [25, 25], // size of the icon
             shadowSize: [50, 64], // size of the shadow
             iconAnchor: [12, 25], // point of the icon which will correspond to marker's location
             shadowAnchor: [4, 62], // the same for the shadow
-            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+            popupAnchor: [0, -20] // point from which the popup should open relative to the iconAnchor
         });
         let circle = L.circle([-7.275612, 112.6301103], {
             color: 'pink',
@@ -56,7 +56,9 @@
         }).addTo(map);
         let marker = L.marker([-7.275612, 112.6301103], {
             icon
-        }).addTo(map);
+        }).addTo(map)
+        .bindPopup('<p class="text-orange-500 font-bold">Titik Pos Damkar</p>')
+        .openPopup();;
         marker.setOpacity(0);
         circle.setStyle({
             fillOpacity: 0,

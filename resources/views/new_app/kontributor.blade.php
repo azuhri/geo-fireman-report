@@ -41,7 +41,7 @@
             <p class="text-center text-slate-500">Buat pelaporan dengan mudah untuk membuat kotamu segera nyaman dari
                 genggaman</p>
             <div class="flex flex-col mt-4">
-                <a href="{{ route('register', '') }}"
+                <a href="{{ route('register.new') }}"
                     class="p-[12px] rounded-full text-center w-full bg-transparent text-orange-500 font-bold my-1 border border-orange-500">Register</a>
                 <a href="{{ route('login') }}"
                     class="p-[12px] rounded-full text-center w-full bg-orange-500 my-1 text-white">Login</a>

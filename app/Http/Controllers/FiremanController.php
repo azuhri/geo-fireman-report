@@ -21,6 +21,10 @@ class FiremanController extends Controller
         return view("app.dashboard.fireman.add-locations");
     }
 
+    function updatePointLocationView() {
+        return view("new_app.dashboard.fireman.point-locations");
+    }
+
     public function geoLocationViewNew()
     {
         if (!Auth::user()->isNullLatLong()) {
@@ -29,19 +33,24 @@ class FiremanController extends Controller
         return view("new_app.dashboard.fireman.add-locations");
     }
 
+    function historyReportView() {
+        return view("new_app.dashboard.fireman.history-report");
+    }
+
     public function reportStatus($status)
     {
         $user = Auth::user();
 
-        $getReport = Report::with("fireman")
+        $getReport = Report::with(["fireman","user"])
             ->where("fireman_id", $user->id);
 
         if ($status != "all") {
             $getReport->where("report_status", $status)
                 ->orderBy("id", "DESC");
         } else {
-            $getReport->orderBy("id", "ASC");
+            $getReport->orderBy("id", "DESC");
         }
+
 
         $getReport =  $getReport->get();
         $response["data"] = $getReport;
@@ -65,6 +74,30 @@ class FiremanController extends Controller
     public function reportView()
     {
         return view("app.dashboard.fireman.report");
+    }
+
+    function updatePointLocation(Request $request) {
+        $response["status"] = true;
+        $response["code"] = 200;
+        $rules = [
+            "long" => ["required"],
+            "lat" => ["required"],
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->fails()) {
+            $response["status"] = \false;
+            $response["code"] = 400;
+            $response["message"] = $validator->errors()->first();
+        } else {
+            $user = Auth::user();
+            $user->longitude = $request->long;
+            $user->latitude = $request->lat;
+            $user->update();
+            $response["message"] = "Sukses simpan titik lokasi baru pemadam kabakaran";
+        }
+
+        return \response()->json($response, $response["code"]);
     }
 
     public function geoLocationPost(Request $request)
@@ -173,9 +206,13 @@ class FiremanController extends Controller
         return view("app.dashboard.fireman.home", \compact($data));
     }
 
+    function homeViewNew() {
+        return view("new_app.dashboard.fireman.home");
+    }
+
     public function profileView()
     {
-        return view("app.dashboard.fireman.profil");
+        return view("app.dashboard.fireman.profile");
     }
 
     public function profilePost(RequestUpdateProfileFireman $request)
@@ -190,6 +227,23 @@ class FiremanController extends Controller
         $user->address = $request->address;
         $user->latitude = $latitude;
         $user->longitude = $longitude;
+        $user->update();
+
+        return \redirect()->back()->with("success", "sukses simpan data profil");
+    }
+
+    public function profileViewNew()
+    {
+        return view("new_app.dashboard.fireman.profile");
+    }
+
+    public function profilePostNew(RequestUpdateProfileFireman $request)
+    {
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phonenumber = $request->phonenumber;
+        $user->address = $request->alamat;
         $user->update();
 
         return \redirect()->back()->with("success", "sukses simpan data profil");

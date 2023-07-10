@@ -25,9 +25,9 @@ class RequestUpdateProfileFireman extends ValidatorRequest
             "name" => ["required"],
             "phonenumber" => ["required","min:10"],
             "email" => ["required", "email:dns"],
-            "address" => ["required"],
-            "latitude" => ["required"],
-            "longitude" => ["required"],
+            "alamat" => ["required"],
+            // "latitude" => ["required"],
+            // "longitude" => ["required"],
         ];
     }
 

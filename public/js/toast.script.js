@@ -2,18 +2,18 @@
     "use strict";
     $.Toast = function(title, message, type, options){
         var defaultOptions = {
-            appendTo: "body",
+            appendTo: "#app",
             stack: false,
             position_class: "toast-top-right",
-            fullscreen:true,
+            fullscreen:false,
             width: 300,
             spacing:100,
-            timeout: 10000,
+            timeout: 5000,
             has_close_btn:true,
             has_icon:false,
             sticky:false,
             border_radius:6,
-            has_progress:false,
+            has_progress:true,
             rtl:false
         }
 
@@ -26,9 +26,11 @@
         var css = {
             "position":($options.appendTo == "body") ? "fixed" : "absolute",
             "min-width":$options.width,
+            "width": "100%",
             "display":"none",
             "border-radius":$options.border_radius,
-            "z-index":99999
+            "z-index":99999,
+            "right": 0,
         }
 
         $element = $('<div class="toast-item-wrapper ' + type + ' ' + $options.position_class + '"></div>');
