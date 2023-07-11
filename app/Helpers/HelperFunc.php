@@ -27,20 +27,20 @@ function getNotifNotBelled() {
 function statusColor($status) {
     switch ($status) {
         case 'pending':
-            $result = 'yellow';            
+            $result = '[#FE5D26]';            
             break;
         case 'ditolak':
         case 'dibatalkan':
-            $result = 'red';            
+            $result = '[#DC3545]';            
             break;
         case 'diproses':
-            $result = 'blue';            
+            $result = 'blue-500';            
             break;
         case 'selesai':
-            $result = 'green';            
+            $result = 'green-500';            
             break;
         default:
-            $result = 'gray';            
+            $result = 'gray-500';            
             break;
     }
     return $result;

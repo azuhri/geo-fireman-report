@@ -23,7 +23,7 @@
 @endsection
 @section('dashboard_content')
     <div class="relative">
-        <div id="modalLogout" style="transition: 500ms" class="w-full fixed z-[10001] bottom-[-500px] left-0 left-0 bottom-0 flex justify-center">
+        <div id="modalLogout" style="transition: 500ms" class="w-full fixed z-[10001] bottom-[-500px] left-0 flex justify-center">
             <div class="p-4 py-8 flex flex-col items-center justify-center w-[600px] md:w-[500px] bg-white shadow border-2 rounded-tr-[20px] rounded-tl-[20px]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="168" height="176" viewBox="0 0 168 176" fill="none">
                     <path d="M91.2626 130.387C95.6506 130.387 99.2078 126.833 99.2078 122.45C99.2078 118.066 95.6506 114.512 91.2626 114.512C86.8746 114.512 83.3174 118.066 83.3174 122.45C83.3174 126.833 86.8746 130.387 91.2626 130.387Z" fill="#EBEBEB"/>

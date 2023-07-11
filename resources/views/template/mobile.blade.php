@@ -10,6 +10,8 @@
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="{{ asset('css/toast.style.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/toast.style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
     @yield('css')
 </head>
 
@@ -20,7 +22,11 @@
     <script src="{{ asset('js/jquery3.7.js') }}"></script>
     @vite('resources/js/app.js')
     <script src="{{ asset('js/toast.script.js') }}"></script>
-    <script type="text/javascript" src="../node_modules/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <script>
+        console.log(twElements);
+    </script>
+    {{-- <script src="{{ asset('node_modules/tw-elements/dist/js/tw-elements.umd.min.js') }}"></script> --}}
     @yield('js')
 </body>
 

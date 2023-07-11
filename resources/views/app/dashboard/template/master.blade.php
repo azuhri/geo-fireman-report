@@ -6,7 +6,11 @@
     @yield('dashboard_css')
 @endsection
 @section('content')
-    <div class="min-h-[100vh] relative">
+<div class="min-h-[100vh] relative">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <span class="loader-text">Loading...</span>
+        </div>
         <div class="border-b-2 font-poppins shadow relative w-full text-center py-4 bg-slate-700 text-slate-50">
             @yield('back')
             <span class="font-bold text-2xl">Geo Fireman Report</span>
@@ -38,13 +42,14 @@
         });
 
         $(document).ready(function() {
-            let jumlahNotif = parseInt('{{count(getNotifNotBelled())}}');
-            if(jumlahNotif > 0) {
+            let jumlahNotif = parseInt('{{ count(getNotifNotBelled()) }}');
+            if (jumlahNotif > 0) {
                 let templateAudio = ` <audio controls autoplay class="">
                                     <source src="{{ asset('sounds/notif.mp3') }}" type="audio/mpeg">
                                 </audio>`;
                 $("#containerAudio").html(templateAudio);
-                $.Toast("Notifikasi", `Ada pesan notifikasi masuk, yuk check inbox notifikasi :')". Silahkan dicheck`, "success");
+                $.Toast("Notifikasi",
+                    `Ada pesan notifikasi masuk, yuk check inbox notifikasi :')". Silahkan dicheck`, "success");
             }
         });
         // const getNotifications = async () => {

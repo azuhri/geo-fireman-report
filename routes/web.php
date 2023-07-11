@@ -117,10 +117,14 @@ Route::middleware("auth")->group(function() {
                     Route::get("update-point-location","updatePointLocationView")->name("fireman.point-location.view");
                     Route::post("update-point-location","updatePointLocation")->name("fireman.point-location.post");
 
-                    Route::prefix("history-report")->group(function() {
-                        Route::get("/","historyReportView")->name("fireman.history");
+                    Route::prefix("report")->group(function() {
+                        Route::prefix("histories")->group(function() {
+                            Route::get("/","historyReportView")->name("fireman.history");
+                        });
+                        Route::get("/", "reportViewNew")->name("fireman.report.view");
                         Route::get("{status}","reportStatus")->name("fireman.report.status");
                         Route::get("detail/{id}", "detailReport")->name("fireman.detail.report");
+                        Route::get("room-chat/{id}", "roomChatView")->name("fireman.roomchat");
                         Route::post("message/{id}", "sendMessage")->name("fireman.send.message");
                         Route::get("message/{id}", "getMessage")->name("fireman.get.message");
                         Route::put("message/{id}/{status}/", "updateReport")->name("fireman.update.report");

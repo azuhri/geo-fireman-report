@@ -37,6 +37,10 @@ class FiremanController extends Controller
         return view("new_app.dashboard.fireman.history-report");
     }
 
+    function reportViewNew() {
+        return view("new_app.dashboard.fireman.reports");
+    }
+
     public function reportStatus($status)
     {
         $user = Auth::user();
@@ -44,7 +48,12 @@ class FiremanController extends Controller
         $getReport = Report::with(["fireman","user"])
             ->where("fireman_id", $user->id);
 
-        if ($status != "all") {
+        
+        if($status == "history") {
+            $getReport->whereIn("report_status",["selesai","dibatalkan","ditolak"])->orderBy("id","ASC");
+        } else if($status == "ongoing") {
+            $getReport->whereIn("report_status",["pending","diproses"])->orderBy("report_status","ASC");
+        } else if ($status != "all") {
             $getReport->where("report_status", $status)
                 ->orderBy("id", "DESC");
         } else {
@@ -68,7 +77,7 @@ class FiremanController extends Controller
             \abort(404);
         }
 
-        return view("app.dashboard.fireman.detail-report", \compact("report"));
+        return view("new_app.dashboard.fireman.detail-report", \compact("report"));
     }
 
     public function reportView()
@@ -128,7 +137,7 @@ class FiremanController extends Controller
         $newMessage->message = $message;
         $newMessage->save();
         $findReport = Report::with("user")->find($reportId);
-        Notification::newNotif($findReport->user_id, "Hallo, kamu ada pesan baru yang belum dibaca nih, yuk dicheck :')", route('user.detail.report',$findReport->id));
+        // Notification::newNotif($findReport->user_id, "Hallo, kamu ada pesan baru yang belum dibaca nih, yuk dicheck :')", route('user.detail.report',$findReport->id));
         $messages = ReportMessage::where("report_id", $reportId)
             ->orderBy("id", "ASC")
             ->get();
@@ -166,7 +175,7 @@ class FiremanController extends Controller
                 \abort(500);
                 break;
         }
-        Notification::newNotif($findReport->user_id, "Hallo, {$findReport->user->name}. laporan kamu ke {$findReport->fireman->name} telah {$status}", route('user.detail.report',$findReport->id));
+        // Notification::newNotif($findReport->user_id, "Hallo, {$findReport->user->name}. laporan kamu ke {$findReport->fireman->name} telah {$status}", route('user.detail.report',$findReport->id));
         $findReport->report_status = $status;
         $findReport->update();
         $response["data"] = $findReport;
@@ -207,7 +216,36 @@ class FiremanController extends Controller
     }
 
     function homeViewNew() {
-        return view("new_app.dashboard.fireman.home");
+        $user = Auth::user();
+        $reportActive = Report::with("fireman")
+            ->where("fireman_id", $user->id)
+            ->whereIn("report_status", ["diproses","pending"])
+            ->orderBy("report_status","ASC")
+            ->first();
+        $queryLaporan = "count(*) AS total_laporan,
+                        count(CASE WHEN report_status = 'selesai' THEN 1 END) AS jumlah_selesai";
+        $dataLaporan = DB::table("reports")->select(DB::raw($queryLaporan))->where("fireman_id", Auth::user()->id)->first();
+        $levelCaseQuery = "count(CASE WHEN type_report = '1' THEN 1 END) AS level1,
+                        count(CASE WHEN type_report = '2' THEN 1 END) AS level2,
+                        count(CASE WHEN type_report = '3' THEN 1 END) AS level3";
+        $caseLevel = DB::table("reports")->select(DB::raw($levelCaseQuery))->where("fireman_id", Auth::user()->id)->first();
+        $querySum = "sum(rating) AS total";
+        $sum = DB::table("reports")
+            ->select(DB::raw($querySum))
+            ->where("fireman_id", $user->id)
+            ->where("rating","!=", null)
+            ->first();
+        $countData = DB::table("reports")
+            ->select(DB::raw("count(*)"))
+            ->where("fireman_id", $user->id)
+            ->where("rating","!=", null)
+            ->first();
+        $rating =  $sum->total == 0 || $countData->count == 0 ? 0 : $sum->total / $countData->count;
+        $data[] = "reportActive";
+        $data[] = "rating";
+        $data[] = "dataLaporan";
+        $data[] = "caseLevel";
+        return view("new_app.dashboard.fireman.home", \compact($data));
     }
 
     public function profileView()
@@ -230,6 +268,18 @@ class FiremanController extends Controller
         $user->update();
 
         return \redirect()->back()->with("success", "sukses simpan data profil");
+    }
+
+    function roomChatView($id) {
+        $user = Auth::user();
+        $report = Report::with(["user", "fireman"])
+            ->where("id", $id)
+            ->where("fireman_id", $user->id)
+            ->first();
+        if (!$report) {
+            \abort(404);
+        }
+        return view("new_app.dashboard.fireman.room-chat", \compact("report"));
     }
 
     public function profileViewNew()
