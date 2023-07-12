@@ -127,7 +127,7 @@ Route::middleware("auth")->group(function() {
                         Route::get("room-chat/{id}", "roomChatView")->name("fireman.roomchat");
                         Route::post("message/{id}", "sendMessage")->name("fireman.send.message");
                         Route::get("message/{id}", "getMessage")->name("fireman.get.message");
-                        Route::put("message/{id}/{status}/", "updateReport")->name("fireman.update.report");
+                        Route::put("update/{id}/{status}", "updateReport")->name("fireman.update.report");
                     });
                 });
             });
@@ -142,8 +142,25 @@ Route::middleware("auth")->group(function() {
         Route::middleware("user")->group(function() {
             Route::prefix("user")->group(function() {
                 Route::controller(UserController::class)->group(function() {
-
+                    Route::get("home","homeViewNew")->name("user.home");
+                    Route::get("profile","profileViewNew")->name("user.profile");
+                    Route::post("profile","profilePost")->name("user.profile.post");
+                    Route::get("call-fireman", "callFiremanView")->name("user.call.fireman");
+                    Route::post("create-report", "createReportNew")->name("user.create.report");
+                    Route::prefix("report")->group(function() {
+                        Route::prefix("histories")->group(function() {
+                            Route::get("/","historyReportView")->name("user.history");
+                        });
+                        Route::get("/", "reportViewNew")->name("user.report.view");
+                        Route::get("{status}","reportStatus")->name("user.report.status");
+                        Route::get("detail/{id}", "detailReport")->name("user.detail.report");
+                        Route::get("room-chat/{id}", "roomChatView")->name("user.roomchat");
+                        Route::post("message/{id}", "sendMessage")->name("user.send.message");
+                        Route::get("message/{id}", "getMessage")->name("user.get.message");
+                        Route::put("update/{id}/{status}", "updateReport")->name("user.update.report");
+                    });
                 });
+
             });
         });
     });

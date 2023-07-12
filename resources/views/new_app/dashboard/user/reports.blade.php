@@ -195,12 +195,12 @@
                                 <div class="flex items-center">
                                     <div class="flex justify-center">
                                         <div class="mr-2 w-[40px] rounded-full p-1 bg-[#FFDFD4] border-2 border-[#FFBEA8] shadow-lg">
-                                            <img class="w-full" src="{{ asset('icons/user-selected.png') }}" alt="">
+                                            <img class="w-full" src="{{ asset('icons/damkar-selected.png') }}" alt="">
                                         </div>
                                     </div>
                                     <div class="flex flex-col">
                                         <small class="text-white font-light text-xs">Pelapor</small>
-                                        <p class="text-white font-semibold text-sm">${data.user.name}</p>
+                                        <p class="text-white font-semibold text-sm">${data.fireman.name}</p>
                                     </div>
                                 </div>
                                 <div class="absolute right-0 top-0 w-[110px] p-[12px] ${bgColor} flex justify-center rounded-tr-[20px] rounded-bl-[20px] text-xs flex items-center px-8 border ${borderColor} ${textColor}">${data.report_status  == "pending" ? "baru" : data.report_status}</div>
@@ -212,7 +212,7 @@
                                     </svg>&nbsp;Level ${data.type_report}</p>
                             </div>
                             <div class="px-2">
-                                <a href="{{route('fireman.detail.report',"/")}}/${data.id}" class="items-center text-sm w-full text-center flex justify-center mt-6 py-[10px] rounded-full text-sm text-white bg-[#ffffff45]"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                                <a href="{{route('user.detail.report',"/")}}/${data.id}" class="items-center text-sm w-full text-center flex justify-center mt-6 py-[10px] rounded-full text-sm text-white bg-[#ffffff45]"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
                                     <path d="M14.6002 1.90666C14.3455 1.64704 14.0225 1.46481 13.6686 1.38105C13.3147 1.29728 12.9442 1.31541 12.6002 1.43333L3.16686 4.58666C2.78641 4.7112 2.45399 4.95076 2.2155 5.27229C1.97701 5.59381 1.84421 5.98144 1.83543 6.38166C1.82665 6.78189 1.94232 7.17497 2.16648 7.50664C2.39064 7.83832 2.71223 8.09223 3.08686 8.23333L6.5802 9.56666C6.65974 9.59708 6.73217 9.64356 6.79296 9.7032C6.85375 9.76285 6.9016 9.83438 6.93353 9.91333L8.26686 13.4133C8.40258 13.7827 8.64887 14.1012 8.97217 14.3254C9.29547 14.5497 9.68006 14.6689 10.0735 14.6667H10.1202C10.5209 14.6594 10.9092 14.5269 11.2308 14.2878C11.5524 14.0487 11.7911 13.7149 11.9135 13.3333L15.0669 3.88666C15.1815 3.54595 15.1986 3.17996 15.1161 2.83005C15.0337 2.48015 14.855 2.1603 14.6002 1.90666V1.90666ZM13.8335 3.46666L10.6469 12.92C10.6099 13.0396 10.5355 13.1443 10.4348 13.2187C10.334 13.2931 10.2121 13.3332 10.0869 13.3333C9.96236 13.3354 9.84019 13.2995 9.73659 13.2304C9.63299 13.1613 9.55286 13.0624 9.50686 12.9467L8.17353 9.44666C8.07686 9.19235 7.92779 8.96121 7.73598 8.76825C7.54418 8.5753 7.31393 8.42484 7.0602 8.32666L3.5602 6.99333C3.44212 6.95006 3.34063 6.8708 3.27005 6.76672C3.19947 6.66265 3.16338 6.53903 3.16686 6.41333C3.16696 6.28809 3.20714 6.16617 3.28151 6.06541C3.35588 5.96465 3.46055 5.89033 3.5802 5.85333L13.0335 2.7C13.1421 2.65576 13.2611 2.64391 13.3762 2.66588C13.4913 2.68785 13.5976 2.74269 13.6823 2.82379C13.7669 2.90488 13.8262 3.00875 13.853 3.12284C13.8799 3.23692 13.8731 3.35634 13.8335 3.46666V3.46666Z" fill="white"/>
                                     </svg>&nbsp;&nbsp;Tinjau Laporan</a>
                             </div>
@@ -233,7 +233,7 @@
         const getReport = async (status) => {
             let errorBanner =
                 `<p id="errorBanner" style="display: none" class="bg-orange-100 border-orange-500 text-orange-600 border text-xs font-bold rounded-lg py-4 text-center">Laporan kosong</p>`
-            fetch(`{{ route('fireman.report.status', '/') }}/${status}`)
+            fetch(`{{ route('user.report.status', '/') }}/${status}`)
                 .then(res => res.json())
                 .then(json => {
                     let data = json.data;

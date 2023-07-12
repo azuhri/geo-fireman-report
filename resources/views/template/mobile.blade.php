@@ -23,9 +23,6 @@
     @vite('resources/js/app.js')
     <script src="{{ asset('js/toast.script.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
-    <script>
-        console.log(twElements);
-    </script>
     {{-- <script src="{{ asset('node_modules/tw-elements/dist/js/tw-elements.umd.min.js') }}"></script> --}}
     @yield('js')
 </body>

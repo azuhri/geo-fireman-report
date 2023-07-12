@@ -6,7 +6,7 @@
 @endsection
 @section('back')
     <div class="mt-10 mb-4 flex justify-center">
-        <button onclick="history.back()" class="absolute left-3 bg-white rounded-full p-2 bottom-[-5px]">
+        <button onclick="history.back()" class="shadow border absolute left-3 bg-white rounded-full p-2 bottom-[-5px]">
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
                 stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
                 <line x1="19" y1="12" x2="5" y2="12"></line>

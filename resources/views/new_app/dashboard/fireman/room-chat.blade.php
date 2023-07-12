@@ -247,7 +247,7 @@
                         <div class="py-1 flex mx-1 justify-start items-center">
                             <img src="{{ url('/') }}/icons/${data.user.gender == 'pria' ? 'male' : 'female'}.png" class=" w-[50px]" alt="">
                             <div class="text-left">
-                                <p class="font-bold mx-2 flex flex-col text-sm text-yellow-900 font-bold">Bayu</p>
+                                <p class="font-bold mx-2 flex flex-col text-sm text-yellow-900 font-bold">${data.user.name}</p>
                                 <p class="text-xs mx-2 font-light text-left">
                                     ${moment(data.created_at).format("MMMM Do YYYY")} | ${moment(data.created_at).format("hh:mm")}
                                 </p>

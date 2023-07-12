@@ -25,7 +25,7 @@ class RequestUpdateProfileUser extends ValidatorRequest
             "name" => ["required"],
             "phonenumber" => ["required","min:10"],
             "email" => ["required", "email:dns"],
-            "address" => ["required"],
+            "alamat" => ["required"],
         ];
     }
 
@@ -36,7 +36,7 @@ class RequestUpdateProfileUser extends ValidatorRequest
             "phonenumber.required" => "nomor wa/telepon harus diisi",
             "email.required" => "email harus diisi",
             "email.dns" => "email yang diisi harus valid",
-            "address.required" => "alamat harus diisi",
+            "alamat.required" => "alamat harus diisi",
         ];
     }
 }

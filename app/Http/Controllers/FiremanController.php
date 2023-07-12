@@ -69,7 +69,7 @@ class FiremanController extends Controller
     public function detailReport($id)
     {
         $user = Auth::user();
-        $report = Report::with(["user", "fireman"])
+        $report = Report::with(["user", "fireman","documents"])
             ->where("id", $id)
             ->where("fireman_id", $user->id)
             ->first();
@@ -137,7 +137,7 @@ class FiremanController extends Controller
         $newMessage->message = $message;
         $newMessage->save();
         $findReport = Report::with("user")->find($reportId);
-        // Notification::newNotif($findReport->user_id, "Hallo, kamu ada pesan baru yang belum dibaca nih, yuk dicheck :')", route('user.detail.report',$findReport->id));
+        Notification::newNotif($findReport->user_id, "Hallo, kamu ada pesan baru yang belum dibaca nih, yuk dicheck :')", route('user.detail.report',$findReport->id));
         $messages = ReportMessage::where("report_id", $reportId)
             ->orderBy("id", "ASC")
             ->get();
@@ -175,7 +175,7 @@ class FiremanController extends Controller
                 \abort(500);
                 break;
         }
-        // Notification::newNotif($findReport->user_id, "Hallo, {$findReport->user->name}. laporan kamu ke {$findReport->fireman->name} telah {$status}", route('user.detail.report',$findReport->id));
+        Notification::newNotif($findReport->user_id, "Hallo, {$findReport->user->name}. laporan kamu ke {$findReport->fireman->name} telah {$status}", route('user.detail.report',$findReport->id));
         $findReport->report_status = $status;
         $findReport->update();
         $response["data"] = $findReport;
@@ -219,7 +219,7 @@ class FiremanController extends Controller
         $user = Auth::user();
         $reportActive = Report::with("fireman")
             ->where("fireman_id", $user->id)
-            ->whereIn("report_status", ["diproses","pending"])
+            ->whereIn("report_status", ["diproses","pending","diperjalanan"])
             ->orderBy("report_status","ASC")
             ->first();
         $queryLaporan = "count(*) AS total_laporan,

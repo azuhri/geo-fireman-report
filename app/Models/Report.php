@@ -13,6 +13,11 @@ class Report extends Model
         return $this->belongsTo(User::class, "fireman_id");
     }
 
+    public function documents()
+    {
+        return $this->hasMany(ReportDocument::class, "report_id");
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, "user_id");

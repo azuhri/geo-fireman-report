@@ -379,9 +379,54 @@
                         </div>
                         <div class="border-t border-t-gray-300 border-slate-300 py-4 p-2 px-4">
                             <div class="px-2 flex justify-between">
-                                <p class="text-xs font-light">Foto</p>
-                                <div class="flex">
-
+                                <div class="px-2 flex flex-col">
+                                    <p class="text-xs font-light">Foto</p>
+                                    <div class="overflow-x-scroll mt-2">
+                                        <div class="flex flex max-w-[400px]">
+                                            @foreach ($report->documents as $doc)
+                                                <a href="{{ url('/') }}/{{ $doc->path_document }}">
+                                                    <div
+                                                        class="preview mx-1 flex justify-center border h-[60px] w-[65px] rounded-xl">
+                                                        <img class="w-full rounded-xl "
+                                                            src="{{ url('/') . '/' . $doc->path_document }}"
+                                                            id="preview-selected-image" />
+                                                    </div>
+                                                </a>
+                                                <a href="{{ url('/') }}/{{ $doc->path_document }}">
+                                                    <div
+                                                        class="preview mx-1 flex justify-center border h-[60px] w-[65px] rounded-xl">
+                                                        <img class="w-full rounded-xl "
+                                                            src="{{ url('/') . '/' . $doc->path_document }}"
+                                                            id="preview-selected-image" />
+                                                    </div>
+                                                </a>
+                                                <a href="{{ url('/') }}/{{ $doc->path_document }}">
+                                                    <div
+                                                        class="preview mx-1 flex justify-center border h-[60px] w-[65px] rounded-xl">
+                                                        <img class="w-full rounded-xl "
+                                                            src="{{ url('/') . '/' . $doc->path_document }}"
+                                                            id="preview-selected-image" />
+                                                    </div>
+                                                </a>
+                                                <a href="{{ url('/') }}/{{ $doc->path_document }}">
+                                                    <div
+                                                        class="preview mx-1 flex justify-center border h-[60px] w-[65px] rounded-xl">
+                                                        <img class="w-full rounded-xl "
+                                                            src="{{ url('/') . '/' . $doc->path_document }}"
+                                                            id="preview-selected-image" />
+                                                    </div>
+                                                </a>
+                                                <a href="{{ url('/') }}/{{ $doc->path_document }}">
+                                                    <div
+                                                        class="preview mx-1 flex justify-center border h-[60px] w-[65px] rounded-xl">
+                                                        <img class="w-full rounded-xl "
+                                                            src="{{ url('/') . '/' . $doc->path_document }}"
+                                                            id="preview-selected-image" />
+                                                    </div>
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
