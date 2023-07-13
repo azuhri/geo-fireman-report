@@ -28,13 +28,13 @@
     <div class="mt-10 mb-4 flex justify-center absolute top-[-20px] z-[1001] w-full">
         <div
             class="bg-orange-100 text-orange-500 border-2 border-orange-500 flex w-[300px] py-[12px] rounded justify-center items-center relative rounded-lg shadow-lg">
-            <button onclick="history.back()" class="absolute left-3 flex items-center ">
+            <a href="{{route('fireman.home')}}" class="absolute left-3 flex items-center ">
                 <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
                     stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
                     <line x1="19" y1="12" x2="5" y2="12"></line>
                     <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
-            </button>
+            </a>
             <p class="font-semibold text-sm">Detail Laporan</p>
         </div>
     </div>
@@ -384,38 +384,6 @@
                                     <div class="overflow-x-scroll mt-2">
                                         <div class="flex flex max-w-[400px]">
                                             @foreach ($report->documents as $doc)
-                                                <a href="{{ url('/') }}/{{ $doc->path_document }}">
-                                                    <div
-                                                        class="preview mx-1 flex justify-center border h-[60px] w-[65px] rounded-xl">
-                                                        <img class="w-full rounded-xl "
-                                                            src="{{ url('/') . '/' . $doc->path_document }}"
-                                                            id="preview-selected-image" />
-                                                    </div>
-                                                </a>
-                                                <a href="{{ url('/') }}/{{ $doc->path_document }}">
-                                                    <div
-                                                        class="preview mx-1 flex justify-center border h-[60px] w-[65px] rounded-xl">
-                                                        <img class="w-full rounded-xl "
-                                                            src="{{ url('/') . '/' . $doc->path_document }}"
-                                                            id="preview-selected-image" />
-                                                    </div>
-                                                </a>
-                                                <a href="{{ url('/') }}/{{ $doc->path_document }}">
-                                                    <div
-                                                        class="preview mx-1 flex justify-center border h-[60px] w-[65px] rounded-xl">
-                                                        <img class="w-full rounded-xl "
-                                                            src="{{ url('/') . '/' . $doc->path_document }}"
-                                                            id="preview-selected-image" />
-                                                    </div>
-                                                </a>
-                                                <a href="{{ url('/') }}/{{ $doc->path_document }}">
-                                                    <div
-                                                        class="preview mx-1 flex justify-center border h-[60px] w-[65px] rounded-xl">
-                                                        <img class="w-full rounded-xl "
-                                                            src="{{ url('/') . '/' . $doc->path_document }}"
-                                                            id="preview-selected-image" />
-                                                    </div>
-                                                </a>
                                                 <a href="{{ url('/') }}/{{ $doc->path_document }}">
                                                     <div
                                                         class="preview mx-1 flex justify-center border h-[60px] w-[65px] rounded-xl">

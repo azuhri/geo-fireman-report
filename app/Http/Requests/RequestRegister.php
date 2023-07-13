@@ -24,7 +24,7 @@ class RequestRegister extends ValidatorRequest
         return [
             "name" => ["required"],
             "phonenumber" => ["required","min:10"],
-            "email" => ["required"],
+            "email" => ["required","unique:users,email","email:dns"],
             "password" => ["required"],
             "confirm_password" => ["required"],
         ];
@@ -38,6 +38,8 @@ class RequestRegister extends ValidatorRequest
             "address.required" => "alamat harus diisi",
             "email.required" => "email harus diisi",
             "password.required" => "password harus diisi",
+            "email.unique" => "email ini telah digunakan oleh pengguna lain",
+            "email.dns" => "email ini tidak valid untuk didaftarkan",
         ];
     }
 }

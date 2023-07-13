@@ -61,9 +61,8 @@ class AuthController extends Controller
 
     public function registerPost(RequestRegister $request)
     {
-        // dd($request->all());
         if($request->password != $request->confirm_password) {
-            return redirect()->back()->withErrors(["error" => "konfirmasi password tidak cocok"])->withInput();
+            return redirect()->back()->withErrors(["errors" => "konfirmasi password tidak cocok"])->withInput();
         }
         $typeUser = $request->type_user;
         $newUser = new User();
