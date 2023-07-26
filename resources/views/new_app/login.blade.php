@@ -33,9 +33,9 @@
                     <div class="pl-2">
                         <input type="checkbox" name="remindsme" id="remindsme"> <label for="remindsme" class="text-md">&nbsp;Ingat Saya</label>
                     </div>
-                    <div class="">
+                    {{-- <div class="">
                         <a href="#" class="text-orange-500 font-bold">Lupa password?</a>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="mt-4">
                     <button class="w-full bg-orange-500 text-white font-bold py-4 rounded-full">Login</button>

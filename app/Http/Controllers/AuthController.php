@@ -64,11 +64,16 @@ class AuthController extends Controller
         if($request->password != $request->confirm_password) {
             return redirect()->back()->withErrors(["errors" => "konfirmasi password tidak cocok"])->withInput();
         }
+        $phonenumber = "62".$request->phonenumber;;
+        $checkNomorWA = User::where("phonenumber", $phonenumber)->first();
+        if($checkNomorWA) {
+            return redirect()->back()->withErrors(["errors" => "nomor wa telah digunakan pengguna lain"])->withInput();
+        }
         $typeUser = $request->type_user;
         $newUser = new User();
         $newUser->type_user = $typeUser == "1" ? 1 : 0;
         $newUser->name = $request->name;
-        $newUser->phonenumber = "62".$request->phonenumber;
+        $newUser->phonenumber = $phonenumber;
         $newUser->email = $request->email;
         $newUser->password = $request->password; 
         if($typeUser) {

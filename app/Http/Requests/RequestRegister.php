@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RequestRegister extends ValidatorRequest
 {
@@ -21,10 +23,14 @@ class RequestRegister extends ValidatorRequest
      */
     public function rules(): array
     {
+        $phonenumber = "62".request()->phonenumber;
         return [
             "name" => ["required"],
-            "phonenumber" => ["required","min:10"],
-            "email" => ["required","unique:users,email","email:dns"],
+            "phonenumber" => [
+                "required",
+                "min:10",
+            ],
+            "email" => ["required", "unique:users,email", "email:dns"],
             "password" => ["required"],
             "confirm_password" => ["required"],
         ];
@@ -35,6 +41,7 @@ class RequestRegister extends ValidatorRequest
         return [
             "name.required" => "nama unit/pengguna harus diisi",
             "phonenumber.required" => "nomor wa/telepon harus diisi",
+            "phonenumber.unique" => "nomor wa/telepon telah digunakan sebelumnya",
             "address.required" => "alamat harus diisi",
             "email.required" => "email harus diisi",
             "password.required" => "password harus diisi",
